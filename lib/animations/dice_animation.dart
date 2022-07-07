@@ -41,7 +41,7 @@ class _DiceAnimationState extends State<DiceAnimation>
     ).animate(
       CurvedAnimation(
         parent: controller,
-        curve: const Interval(0, 1, curve: Curves.easeInOutSine),
+        curve: const Interval(0, 1, curve: Curves.easeInSine),
       ),
     );
     yPosition = Tween<double>(
@@ -49,8 +49,9 @@ class _DiceAnimationState extends State<DiceAnimation>
       end: -10,
     ).animate(
       CurvedAnimation(
-          parent: controller,
-          curve: const Interval(0, 0.5, curve: Curves.easeIn)),
+        parent: controller,
+        curve: const Interval(0, 0.5, curve: Curves.easeInBack),
+      ),
     );
 
     yPosition2 = Tween<double>(
@@ -59,7 +60,7 @@ class _DiceAnimationState extends State<DiceAnimation>
     ).animate(
       CurvedAnimation(
         parent: controller,
-        curve: const Interval(0.5, 1.0, curve: Curves.easeIn),
+        curve: const Interval(0.5, 1.0, curve: Curves.easeInOutBack),
       ),
     );
 
@@ -91,9 +92,7 @@ class _DiceAnimationState extends State<DiceAnimation>
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   _buildDiceAnimation(),
-                  const SizedBox(
-                    width: 8,
-                  ),
+                  const SizedBox(width: 8),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: const [
