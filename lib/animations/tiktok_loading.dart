@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_microanimations/animations/style/colors.dart';
 
 class TikTokLoading extends StatefulWidget {
   const TikTokLoading({Key? key}) : super(key: key);
@@ -7,67 +8,161 @@ class TikTokLoading extends StatefulWidget {
   State<TikTokLoading> createState() => _TikTokLoadingState();
 }
 
-class _TikTokLoadingState extends State<TikTokLoading> {
-  double endDxOffset1 = 0.0;
-  double endDxOffset2 = 20.0;
-
-  double endScale2 = 0.7;
+class _TikTokLoadingState extends State<TikTokLoading>
+    with SingleTickerProviderStateMixin {
   Color tiktok1 = const Color(0xFFFE2D55);
   Color tiktok2 = const Color(0xFF1FDAEB);
-  final animationDuration = const Duration(milliseconds: 350);
+  final animationDuration = const Duration(milliseconds: 700);
+
+  late AnimationController controller;
+  late Animation<double> scaleRedLeft;
+  late Animation<double> scaleRedRight;
+
+  late Animation<double> offsetRedLeft;
+  late Animation<double> offsetRedRight;
+  late Animation<double> offsetBlue;
+
+  late Animation<double> scaleBlue;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = AnimationController(
+      vsync: this,
+      duration: animationDuration,
+    );
+
+    scaleBlue = TweenSequence<double>(
+      <TweenSequenceItem<double>>[
+        TweenSequenceItem<double>(
+          tween: Tween<double>(
+            begin: 1.0,
+            end: .9,
+          ).chain(
+            CurveTween(curve: Curves.easeIn),
+          ),
+          weight: 50.0,
+        ),
+        TweenSequenceItem<double>(
+          tween: Tween<double>(
+            begin: .9,
+            end: 1.0,
+          ).chain(
+            CurveTween(curve: Curves.easeOut),
+          ),
+          weight: 50.0,
+        ),
+      ],
+    ).animate(controller);
+    scaleRedLeft = TweenSequence<double>(
+      <TweenSequenceItem<double>>[
+        TweenSequenceItem<double>(
+          tween: Tween<double>(
+            begin: 1.1,
+            end: 1.0,
+          ).chain(
+            CurveTween(curve: Curves.linear),
+          ),
+          weight: 50.0,
+        ),
+        TweenSequenceItem<double>(
+          tween: ConstantTween<double>(0),
+          weight: 50.0,
+        ),
+      ],
+    ).animate(controller);
+    scaleRedRight = TweenSequence<double>(
+      <TweenSequenceItem<double>>[
+        TweenSequenceItem<double>(
+          tween: ConstantTween<double>(0.0),
+          weight: 50.0,
+        ),
+        TweenSequenceItem<double>(
+          tween: Tween<double>(
+            begin: 1.0,
+            end: 1.1,
+          ).chain(
+            CurveTween(curve: Curves.linear),
+          ),
+          weight: 50.0,
+        ),
+      ],
+    ).animate(controller);
+
+    offsetBlue = Tween<double>(
+      begin: 18,
+      end: 0,
+    ).animate(
+      CurvedAnimation(
+        parent: controller,
+        curve: Curves.linear,
+      ),
+    );
+    offsetRedLeft = Tween<double>(
+      begin: 0,
+      end: 9,
+    ).animate(
+      CurvedAnimation(
+        parent: controller,
+        curve: const Interval(0.0, 0.5, curve: Curves.linear),
+      ),
+    );
+    offsetRedRight = Tween<double>(
+      begin: 7,
+      end: 18.0,
+    ).animate(
+      CurvedAnimation(
+        parent: controller,
+        curve: const Interval(0.5, 1.0, curve: Curves.linear),
+      ),
+    );
+
+    controller.repeat(reverse: true);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: primaryColor,
       body: Center(
         child: Stack(
           children: [
-            TweenAnimationBuilder(
-              tween: Tween<double>(begin: 0.0, end: endDxOffset2),
-              onEnd: () => endDxOffset2 == 0.0
-                  ? setState(
-                      () => endDxOffset2 = 20.0,
-                    )
-                  : setState(
-                      () => endDxOffset2 = 0.0,
+            AnimatedBuilder(
+              animation: controller.view,
+              builder: (context, _) {
+                return Stack(
+                  children: [
+                    Transform.translate(
+                      offset: Offset(offsetRedLeft.value, 0),
+                      child: Transform.scale(
+                        scale: scaleRedLeft.value,
+                        child: CircleAvatar(
+                          radius: 8,
+                          backgroundColor: tiktok1,
+                        ),
+                      ),
                     ),
-              duration: animationDuration,
-              builder: (_, double value, ___) {
-                return Transform.translate(
-                    offset: Offset(value, 0),
-                    child: TweenAnimationBuilder(
-                      tween: Tween<double>(begin: 1.0, end: endScale2),
-                      curve: Curves.slowMiddle,
-                      duration: animationDuration * 2,
-                      onEnd: () => endScale2 == 0.7
-                          ? setState(() => endScale2 = 1.0)
-                          : setState(() => endScale2 = 0.7),
-                      builder: (_, double value, __) {
-                        return Transform.scale(
-                          scale: value,
-                          child: CircleAvatar(
-                            radius: 8,
-                            backgroundColor: tiktok2.withOpacity(0.8),
-                          ),
-                        );
-                      },
-                    ));
-              },
-            ),
-            TweenAnimationBuilder(
-              tween: Tween<double>(begin: 20.0, end: endDxOffset1),
-              onEnd: () => endDxOffset1 == 0.0
-                  ? setState(() => endDxOffset1 = 20.0)
-                  : setState(() => endDxOffset1 = 0.0),
-              duration: animationDuration,
-              builder: (_, double value, ___) {
-                return Transform.translate(
-                  offset: Offset(value, 0),
-                  child: CircleAvatar(
-                    radius: 8,
-                    backgroundColor: tiktok1.withOpacity(0.8),
-                  ),
+                    Transform.translate(
+                      offset: Offset(offsetBlue.value, 0),
+                      child: Transform.scale(
+                        scale: scaleBlue.value,
+                        child: CircleAvatar(
+                          radius: 8,
+                          backgroundColor: tiktok2,
+                        ),
+                      ),
+                    ),
+                    Transform.translate(
+                      offset: Offset(offsetRedRight.value, 0),
+                      child: Transform.scale(
+                        scale: scaleRedRight.value,
+                        child: CircleAvatar(
+                          radius: 8,
+                          backgroundColor: tiktok1,
+                        ),
+                      ),
+                    ),
+                  ],
                 );
               },
             ),

@@ -11,7 +11,8 @@ class RadialMenu extends StatefulWidget {
   State<RadialMenu> createState() => _RadialMenuState();
 }
 
-class _RadialMenuState extends State<RadialMenu> with TickerProviderStateMixin {
+class _RadialMenuState extends State<RadialMenu>
+    with SingleTickerProviderStateMixin {
   late AnimationController controller;
 
   late Animation<double> scale;
