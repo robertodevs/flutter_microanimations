@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'animations/animated_scroll/pages/animated_scroll_screen.dart';
+import 'animations/tutorials/first_explicit_animation.dart';
 
 void main() {
   runApp(const MyApp());
@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const AnimatedScrollScreen(),
+      home: const ExplicitAnimation(),
     );
   }
 }
