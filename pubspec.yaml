@@ -46,8 +46,8 @@ dev_dependencies:
   # rules and activating additional ones.
   dots_indicator: ^2.1.0
   flutter_lints: ^1.0.0
-  font_awesome_flutter: ^10.1.0
-  lottie: ^1.4.1
+  font_awesome_flutter: 
+  lottie: 
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

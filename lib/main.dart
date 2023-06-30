@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'animations/tutorials/first_explicit_animation.dart';
+import 'package:flutter_microanimations/animations/figma_to_lottie.dart';
 
 void main() {
   runApp(const MyApp());
@@ -26,7 +25,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const ExplicitAnimation(),
+      home: const FigmaToLottie(),
     );
   }
 }
