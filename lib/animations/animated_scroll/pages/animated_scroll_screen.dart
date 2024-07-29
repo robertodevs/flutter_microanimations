@@ -26,8 +26,8 @@ class AnimatedScrollScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
-                          children: const [
+                        const Row(
+                          children: [
                             Text(
                               'Aji Sushi',
                               style: TextStyle(fontWeight: FontWeight.bold),
@@ -35,7 +35,7 @@ class AnimatedScrollScreen extends StatelessWidget {
                           ],
                         ),
                         Text('\$0 Delivery Fee . 35-45 min',
-                            style: Theme.of(context).textTheme.caption),
+                            style: Theme.of(context).textTheme.labelSmall),
                       ],
                     ),
                   ),

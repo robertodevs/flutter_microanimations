@@ -18,6 +18,9 @@ class _FigmaToLottieState extends State<FigmaToLottie>
         duration: const Duration(
           milliseconds: 1000,
         ));
+    if (_controller.isCompleted) {
+      Navigator.of(context).pop();
+    }
     super.initState();
   }
 
@@ -25,21 +28,22 @@ class _FigmaToLottieState extends State<FigmaToLottie>
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-          child: IconButton(
-        iconSize: 150,
-        splashRadius: 32,
-        onPressed: () {
-          _controller.forward();
-          if (_controller.isCompleted) {
-            _controller.reset();
-          }
-        },
-        icon: Lottie.asset(
-          'assets/animations/youtube-like.json',
-          repeat: false,
-          controller: _controller,
+        child: IconButton(
+          iconSize: 150,
+          splashRadius: 32,
+          onPressed: () {
+            _controller.forward();
+            if (_controller.isCompleted) {
+              _controller.reset();
+            }
+          },
+          icon: Lottie.asset(
+            'assets/animations/youtube-like.json',
+            repeat: false,
+            controller: _controller,
+          ),
         ),
-      )),
+      ),
     );
   }
 }

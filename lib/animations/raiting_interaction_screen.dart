@@ -160,7 +160,6 @@ class _RaitingInteractionScreenState extends State<RaitingInteractionScreen>
       width: 300,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          primary: Colors.black,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30.0),
           ),
